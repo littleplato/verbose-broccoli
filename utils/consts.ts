@@ -1,14 +1,34 @@
-export const genres = [
+export const industries = [
   {
-    value: 'crime',
-    name: 'Crime',
+    label: 'Manufacturing',
+    value: 'manufacturing',
   },
-  { value: 'fantasy', name: 'Fantasy' },
   {
-    value: 'romantic',
-    name: 'Romance',
+    label: 'Technology',
+    value: 'technology',
   },
-  { value: 'science fiction', name: 'Science Fiction' },
-  { value: 'historical fiction', name: 'Historical Fiction' },
-  { value: 'horror', name: 'Horror' },
+  {
+    label: 'Education',
+    value: 'education',
+  },
+  {
+    label: 'Advertising',
+    value: 'advertising',
+  },
+  {
+    label: 'Entertainment',
+    value: 'entertainment',
+  },
+  {
+    label: 'Healthcare',
+    value: 'healthcare',
+  },
+  {
+    label: 'Finance',
+    value: 'finance',
+  },
+  {
+    label: 'Retail',
+    value: 'retail',
+  },
 ];

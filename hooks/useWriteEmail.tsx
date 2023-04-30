@@ -1,52 +1,57 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
-import { generateURL, generateUUID } from '@/utils/utils';
+import { generateUUID } from '@/utils/utils';
 import useGenerateImage from './useGenerateImage';
 
-export default function useMakeStory() {
+export default function useWriteEmail() {
   const {
     generateImage,
     url,
     isLoading: isImageLoading,
     resetUrl,
   } = useGenerateImage();
-  const [story, setStory] = useState('');
-  const [title, setTitle] = useState('');
-  const [genre, setGenre] = useState('');
+  const [body, setBody] = useState('');
+  const [params, setParams] = useState<EmailPrompt>({
+    industry: '',
+    role: '',
+    product: '',
+  });
   const [id, setId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const ref = useRef('');
+  const [isIncomplete, setIsIncomplete] = useState(false);
 
-  useEffect(() => {
-    if (story && !isImageLoading && ref.current !== id) {
-      const summary = story.substring(0, story.search(/\./g));
-      generateImage(summary);
-      ref.current = id;
-    }
-  }, [story, isImageLoading, generateImage, id]);
-
-  const makeStory = async (e: FormEvent<HTMLFormElement>) => {
+  const writeEmail = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    const prompt = formData.get('prompt')?.toString().trim();
-    const type = formData.get('genre')?.toString().trim() || 'heroic';
-    if (!prompt) {
+    const industry = formData.get('industry')?.toString().trim();
+    const role = formData.get('role')?.toString().trim();
+    const product = formData.get('product')?.toString().trim();
+
+    if (!industry || !role || !product) {
+      setIsIncomplete(true);
       return;
     }
-    setStory('');
+    setBody('');
     resetUrl();
-    setTitle(prompt);
-    setGenre(type);
+    setParams({
+      industry,
+      role,
+      product,
+    });
+
     try {
       setIsLoading(true);
-      const response = await fetch('/api/story', {
+      const response = await fetch('/api/email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          prompt,
-          genre: type,
+          params: {
+            industry,
+            role,
+            product,
+          },
         }),
       });
 
@@ -65,8 +70,9 @@ export default function useMakeStory() {
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
         const chunkValue = decoder.decode(value);
-        setStory((prev) => prev + chunkValue);
+        setBody((prev) => prev + chunkValue);
       }
+      generateImage({ industry, product });
       setId(generateUUID());
     } catch (error) {
       console.error(error);
@@ -75,5 +81,14 @@ export default function useMakeStory() {
       setIsLoading(false);
     }
   };
-  return { makeStory, isLoading, story, isError, title, genre, id, url };
+  return {
+    writeEmail,
+    isLoading,
+    body,
+    isError,
+    isIncomplete,
+    params,
+    id,
+    url,
+  };
 }

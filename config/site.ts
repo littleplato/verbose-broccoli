@@ -1,20 +1,16 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: 'Automatic Parakeet',
-  description: 'Experimental intelligent storybook creator.',
+  name: 'Verbose Broccoli',
+  description: 'Intelligent email lead generator',
   mainNav: [
     {
-      title: 'Home',
+      title: 'Generate Email',
       href: '/',
     },
     {
-      title: 'Saved Books',
-      href: '/saved-books',
+      title: 'Saved Emails',
+      href: '/saved-emails',
     },
   ],
-  links: {
-    twitter: 'https://twitter.com/',
-    github: 'https://github.com/weejerrick/automatic-parakeet',
-  },
 };

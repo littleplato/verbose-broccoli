@@ -77,3 +77,9 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
 
   return stream;
 }
+
+export const calculateToken = (prompt: string) => {
+  const MAX_TOKENS = 4_000;
+  const tokenContents = prompt.length * 4;
+  return MAX_TOKENS - tokenContents;
+};

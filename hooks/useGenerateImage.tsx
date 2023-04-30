@@ -10,19 +10,25 @@ export default function useGenerateImage() {
     setUrl('');
   };
 
-  const generateImage = useCallback(async (summary: string) => {
-    try {
-      setIsLoading(true);
-      const image = await fetch(generateURL('/api/image', { prompt: summary }));
-      const imageSrc = await image.json();
-      setUrl(imageSrc.url);
-    } catch (e) {
-      setIsError(true);
-      console.error(e);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const generateImage = useCallback(
+    async (params: { industry: string; product: string }) => {
+      const { industry, product } = params;
+      try {
+        setIsLoading(true);
+        const image = await fetch(
+          generateURL('/api/image', { industry, product })
+        );
+        const imageSrc = await image.json();
+        setUrl(imageSrc.url);
+      } catch (e) {
+        setIsError(true);
+        console.error(e);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    []
+  );
 
   return { url, isError, isLoading, generateImage, resetUrl };
 }
