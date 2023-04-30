@@ -1,5 +1,6 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import { generateUUID } from '@/utils/utils';
+import { EmailPrompt } from '@/types/email';
 import useGenerateImage from './useGenerateImage';
 
 export default function useWriteEmail() {
