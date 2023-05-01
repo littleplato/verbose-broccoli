@@ -33,7 +33,7 @@ export default function EmailCard(email: Props) {
         <div className="flex-col sm:flex sm:flex-row">
           <div className="grow">
             <CardTitle className="mb-1">{email.subject}</CardTitle>
-            <CardDescription>{`To the ${role} from ${industry}`}</CardDescription>
+            <CardDescription>{`To the ${role} from the ${industry} sector`}</CardDescription>
           </div>
           <div className="my-2 sm:my-0">
             <Button
@@ -49,8 +49,8 @@ export default function EmailCard(email: Props) {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col-reverse md:flex-row md:space-x-4">
-          <div className="mt-4 md:mt-0 md:basis-2/3">
-            {email.body && <h5>{email.body}</h5>}
+          <div className="mt-4 whitespace-pre-line md:mt-0 md:basis-2/3">
+            {Boolean(email.body) && email.body}
           </div>
           <div className="md:basis-1/3">
             {email.url ? (

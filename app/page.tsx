@@ -18,6 +18,7 @@ import EmailCard from '@/components/email-card';
 export default function IndexPage() {
   const { writeEmail, isLoading, isError, isStreaming, ...email } =
     useWriteEmail();
+  console.log('email.body', email.body);
   return (
     <section className="container grid items-center pb-8 pt-6 md:py-10">
       <h1 className="text-center text-3xl font-bold">{siteConfig.name}</h1>
@@ -64,7 +65,9 @@ export default function IndexPage() {
       </form>
       <div className="my-4" />
       {isError && 'Something went wrong. Please try again.'}
-      {!isError && isStreaming && email.body}
+      {isStreaming && (
+        <div className="whitespace-pre-line leading-normal">{email.body}</div>
+      )}
       {email.body && email.subject && <EmailCard {...email} />}
     </section>
   );
