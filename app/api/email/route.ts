@@ -22,7 +22,7 @@ export async function POST(req: Request): Promise<Response> {
     return new Response('Params incomplete in the request', { status: 400 });
   }
 
-  const content = `You are a salesperson selling your ${product} and are writing a sales email to a client: ${role} who works in ${industry}. Write a 100 word email pitching the product. Start the email with a joke about the client's industry.`;
+  const content = `You are a salesperson selling your ${product} and are writing a sales email to a client: ${role} who works in ${industry}. Write a 100 word email pitching the product. Start the email with a joke about the client's industry. Format the email with "Subject:" and "Body:".`;
 
   const payload: OpenAIStreamPayload = {
     model: 'gpt-3.5-turbo',

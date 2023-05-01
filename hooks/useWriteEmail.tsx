@@ -1,6 +1,7 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import { generateUUID } from '@/utils/utils';
 import { EmailPrompt } from '@/types/email';
+import { formatEmail } from './helper';
 import useGenerateImage from './useGenerateImage';
 
 export default function useWriteEmail() {
@@ -10,6 +11,7 @@ export default function useWriteEmail() {
     isLoading: isImageLoading,
     resetUrl,
   } = useGenerateImage();
+  const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
   const [params, setParams] = useState<EmailPrompt>({
     industry: '',
@@ -20,6 +22,7 @@ export default function useWriteEmail() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isIncomplete, setIsIncomplete] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
 
   const writeEmail = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,6 +35,7 @@ export default function useWriteEmail() {
       setIsIncomplete(true);
       return;
     }
+    setSubject('');
     setBody('');
     resetUrl();
     setParams({
@@ -66,13 +70,24 @@ export default function useWriteEmail() {
       const reader = data.getReader();
       const decoder = new TextDecoder();
       let done = false;
+      setIsStreaming(true);
 
       while (!done) {
         const { value, done: doneReading } = await reader.read();
         done = doneReading;
         const chunkValue = decoder.decode(value);
+        if (done) {
+          setBody((prev) => {
+            const fullEmail = prev + chunkValue;
+            const [newSubject, newBody] = formatEmail(fullEmail);
+            setSubject(newSubject);
+            return newBody;
+          });
+          break;
+        }
         setBody((prev) => prev + chunkValue);
       }
+      setIsStreaming(false);
       generateImage({ industry, product });
       setId(generateUUID());
     } catch (error) {
@@ -91,5 +106,7 @@ export default function useWriteEmail() {
     params,
     id,
     url,
+    isStreaming,
+    subject,
   };
 }

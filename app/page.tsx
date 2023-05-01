@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/select';
 
 export default function IndexPage() {
-  const { writeEmail, isLoading, isError, isIncomplete, ...email } =
+  const { writeEmail, isLoading, isError, isStreaming, ...email } =
     useWriteEmail();
   return (
     <section className="container grid items-center pb-8 pt-6 md:py-10">
@@ -64,7 +64,15 @@ export default function IndexPage() {
       </form>
       <div className="my-4" />
       {isError && 'Something went wrong. Please try again.'}
-      {!isError && email.body}
+      {!isError && isStreaming && email.body}
+      {!isStreaming && (
+        <>
+          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+            {email.subject}
+          </h4>
+          <p className="leading-6 [&:not(:first-child)]:mt-4">{email.body}</p>
+        </>
+      )}
       {email.url && (
         <Image
           className="rounded-md"
