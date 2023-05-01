@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { industries } from '@/utils/consts';
 import { Loader2 } from 'lucide-react';
+import { siteConfig } from '@/config/site';
 import useWriteEmail from '@/hooks/useWriteEmail';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,10 +20,8 @@ export default function IndexPage() {
     useWriteEmail();
   return (
     <section className="container grid items-center pb-8 pt-6 md:py-10">
-      <h1 className="text-center text-3xl font-bold">Verbose Broccoli</h1>
-      <sub className="text-center text-sm">
-        An intelligent email lead generator
-      </sub>
+      <h1 className="text-center text-3xl font-bold">{siteConfig.name}</h1>
+      <sub className="text-center text-sm">{siteConfig.description}</sub>
       <form className="mt-6" onSubmit={writeEmail}>
         <div className="mt-4 flex w-full flex-col items-center">
           <div className="flex w-full flex-col items-center space-y-2 md:flex-row md:space-x-2 md:space-y-0">

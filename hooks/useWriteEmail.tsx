@@ -24,9 +24,9 @@ export default function useWriteEmail() {
   const writeEmail = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    const industry = formData.get('industry')?.toString().trim();
-    const role = formData.get('role')?.toString().trim();
-    const product = formData.get('product')?.toString().trim();
+    const industry = formData.get('industry')?.toString().trim().toLowerCase();
+    const role = formData.get('role')?.toString().trim().toLowerCase();
+    const product = formData.get('product')?.toString().trim().toLowerCase();
 
     if (!industry || !role || !product) {
       setIsIncomplete(true);
