@@ -64,10 +64,8 @@ export default function IndexPage() {
       </form>
       <div className="my-4" />
       {isError && 'Something went wrong. Please try again.'}
-      {email.body && email.body}
-      {!isStreaming && !isError && email.body && email.subject && (
-        <EmailCard {...email} />
-      )}
+      {!isError && isStreaming && email.body}
+      {email.body && email.subject && <EmailCard {...email} />}
     </section>
   );
 }
