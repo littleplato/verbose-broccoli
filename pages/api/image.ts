@@ -11,14 +11,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const prompt = req.query.prompt;
+  const { industry, product } = req.query;
 
-  if (!prompt) {
-    return res.status(400).json({ error: 'Prompt missing' });
+  if (!industry || !product) {
+    return res.status(400).json({ error: 'Params missing' });
   }
 
   const response = await openai.createImage({
-    prompt: `An illustration of the topic: ${prompt}`,
+    prompt: `The future of ${industry} after integrating ${product}`,
     n: 1,
     size: '1024x1024',
   });

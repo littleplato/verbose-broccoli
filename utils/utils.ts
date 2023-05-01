@@ -9,3 +9,6 @@ export const generateURL = (
 };
 
 export const generateUUID = () => crypto.randomUUID();
+
+export const capitaliseFirstLetter = (str: string) =>
+  str.charAt(0).toUpperCase() + str.slice(1);

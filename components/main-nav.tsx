@@ -9,6 +9,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { Icons } from '@/components/icons';
 
 interface MainNavProps {
   items?: NavItem[];
@@ -45,7 +46,8 @@ export function MainNav({ items }: MainNavProps) {
           </PopoverContent>
         </Popover>
       </div>
-      {/* <Link href="/" className="hidden items-center space-x-2 sm:flex">
+      {/* <Link href="/" className="hidden items-center space-x-2 md:flex">
+        <Icons.logo className="h-6 w-6" />
         <span className="hidden font-bold sm:inline-block">
           {siteConfig.name}
         </span>
