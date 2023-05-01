@@ -18,7 +18,6 @@ import EmailCard from '@/components/email-card';
 export default function IndexPage() {
   const { writeEmail, isLoading, isError, isStreaming, ...email } =
     useWriteEmail();
-  console.log('email.body', email.body);
   return (
     <section className="container grid items-center pb-8 pt-6 md:py-10">
       <h1 className="text-center text-3xl font-bold">{siteConfig.name}</h1>
