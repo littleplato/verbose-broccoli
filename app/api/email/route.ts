@@ -1,4 +1,4 @@
-import { OpenAIStream, OpenAIStreamPayload, calculateToken } from './helper';
+import { OpenAIStream, OpenAIStreamPayload } from './helper';
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error('Missing env var from OpenAI');
@@ -22,7 +22,7 @@ export async function POST(req: Request): Promise<Response> {
     return new Response('Params incomplete in the request', { status: 400 });
   }
 
-  const content = `You are a salesperson selling your ${product} and are writing a sales email to a client: ${role} who works in ${industry}. Write a 100 word email pitching the product. Start the email with a joke about the client's industry. Format the email with "Subject:" and "Body:".`;
+  const content = `You are a salesperson selling your ${product} and are writing a sales email to a client: ${role} who works in ${industry}. Write a 100 word email pitching the product. Start the email with a joke about the client's industry. Format the email subject with "Subject:".`;
 
   const payload: OpenAIStreamPayload = {
     model: 'gpt-3.5-turbo',
@@ -36,7 +36,7 @@ export async function POST(req: Request): Promise<Response> {
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
-    max_tokens: calculateToken(content),
+    max_tokens: 3_000,
     stream: true,
     n: 1,
   };

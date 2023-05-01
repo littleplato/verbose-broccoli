@@ -1,16 +1,11 @@
-import React, { FormEvent, useEffect, useRef, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { generateUUID } from '@/utils/utils';
 import { EmailPrompt } from '@/types/email';
 import { formatEmail } from './helper';
 import useGenerateImage from './useGenerateImage';
 
 export default function useWriteEmail() {
-  const {
-    generateImage,
-    url,
-    isLoading: isImageLoading,
-    resetUrl,
-  } = useGenerateImage();
+  const { generateImage, url, resetUrl } = useGenerateImage();
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
   const [params, setParams] = useState<EmailPrompt>({
@@ -84,12 +79,12 @@ export default function useWriteEmail() {
             setSubject(newSubject);
             return newBody;
           });
+          setIsStreaming(false);
+          setId(generateUUID());
           break;
         }
         setBody((prev) => prev + chunkValue);
       }
-      setIsStreaming(false);
-      setId(generateUUID());
     } catch (error) {
       console.error(error);
       setIsError(true);

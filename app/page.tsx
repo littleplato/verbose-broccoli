@@ -64,10 +64,10 @@ export default function IndexPage() {
       </form>
       <div className="my-4" />
       {isError && 'Something went wrong. Please try again.'}
-      {!isError && isStreaming && email.body}
-      {!isStreaming && !isError && email.body && email.subject && (
-        <EmailCard {...email} />
+      {isStreaming && (
+        <div className="whitespace-pre-line leading-normal">{email.body}</div>
       )}
+      {email.body && email.subject && <EmailCard {...email} />}
     </section>
   );
 }
