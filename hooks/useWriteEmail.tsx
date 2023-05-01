@@ -84,11 +84,11 @@ export default function useWriteEmail() {
             setSubject(newSubject);
             return newBody;
           });
+          setIsStreaming(false);
           break;
         }
         setBody((prev) => prev + chunkValue);
       }
-      setIsStreaming(false);
       setId(generateUUID());
     } catch (error) {
       console.error(error);
