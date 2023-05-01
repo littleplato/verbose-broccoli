@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { industries } from '@/utils/consts';
 import { Loader2 } from 'lucide-react';
 import { siteConfig } from '@/config/site';
@@ -14,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import EmailCard from '@/components/email-card';
 
 export default function IndexPage() {
   const { writeEmail, isLoading, isError, isStreaming, ...email } =
@@ -65,22 +65,8 @@ export default function IndexPage() {
       <div className="my-4" />
       {isError && 'Something went wrong. Please try again.'}
       {!isError && isStreaming && email.body}
-      {!isStreaming && (
-        <>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-            {email.subject}
-          </h4>
-          <p className="leading-6 [&:not(:first-child)]:mt-4">{email.body}</p>
-        </>
-      )}
-      {email.url && (
-        <Image
-          className="rounded-md"
-          src={email.url}
-          alt={`The future with ${email.params.product}`}
-          width="500"
-          height="500"
-        />
+      {!isStreaming && !isError && email.body && email.subject && (
+        <EmailCard {...email} />
       )}
     </section>
   );

@@ -67,6 +67,7 @@ export default function useWriteEmail() {
       if (!data) {
         return;
       }
+      generateImage({ industry, product });
       const reader = data.getReader();
       const decoder = new TextDecoder();
       let done = false;
@@ -88,7 +89,6 @@ export default function useWriteEmail() {
         setBody((prev) => prev + chunkValue);
       }
       setIsStreaming(false);
-      generateImage({ industry, product });
       setId(generateUUID());
     } catch (error) {
       console.error(error);
