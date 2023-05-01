@@ -1,4 +1,4 @@
-import { OpenAIStream, OpenAIStreamPayload, calculateToken } from './helper';
+import { OpenAIStream, OpenAIStreamPayload } from './helper';
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error('Missing env var from OpenAI');
@@ -36,7 +36,7 @@ export async function POST(req: Request): Promise<Response> {
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
-    max_tokens: calculateToken(content),
+    max_tokens: 4_000,
     stream: true,
     n: 1,
   };
